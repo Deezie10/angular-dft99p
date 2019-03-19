@@ -1,0 +1,12 @@
+p {
+  font-family: Lato;
+}
+
+.error {
+  color: red;
+}
+
+pre {
+  padding: 5px;
+  background-color: #eee;
+}

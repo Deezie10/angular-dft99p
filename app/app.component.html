@@ -1,0 +1,50 @@
+<h2>Authenticate</h2>
+
+<button (click)="signIn('prof1')">Auth as prof1</button>
+&nbsp;
+<button (click)="signIn('prof2')">Auth as prof2</button>
+&nbsp;
+<button (click)="signIn('studentf')">Auth as Student F</button>
+&nbsp;
+<button (click)="signOut()">Sign Out</button>
+
+<p *ngIf="auth.user | async as user">Logged in as: {{ getUserPrefix(user) }}</p>
+
+<h2>Query</h2>
+
+<p>
+  <button (click)="queryStudents('IZW1vvkpL2UOt9lcdhenWeBBboh2')">Query prof1 students</button>
+  &nbsp;
+  <button (click)="queryStudents('lAkWa9BqDDZuOGn6xAGa8FZ6giA3')">Query prof2 students</button>
+</p>
+
+<p>
+  <button (click)="getRecord('student1')">Read Student A record</button>
+  &nbsp;
+  <button (click)="getRecord('CdLeh473zsPMX3I1jY0sOQOla032')">Read Student F record</button>
+</p>
+
+<pre>{{queryString}}</pre>
+
+<h2>Output</h2>
+
+<pre [ngClass]="{error: isError}">{{ (data | async | json) || (error | json) }}</pre>
+
+
+<h2>Rules</h2>
+
+<pre>
+"students": &#x0007B;
+  ".read": "auth.uid != null &&
+          query.orderByChild == 'uuidc' &&
+          query.equalTo == auth.uid",
+  "$student_id": &#x0007B;
+      // grants read access at a specific student record to instructor or student
+      ".read": "auth.uid == $student_id || auth.uid == data.child('uuidc').val()"
+  &#x0007D;
+&#x0007D;
+</pre>
+
+<h2>Raw data</h2>
+
+<pre>{{ rawData | json }}</pre>
